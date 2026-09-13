@@ -1,0 +1,13 @@
+{
+  "name": "sanitylifters",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sanity Lifters — an idea board that turns markdown drafts into a browsable web UI.",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
