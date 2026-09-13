@@ -13,7 +13,15 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="app">
+  <div class="mobile-bar">
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="mobile-brand">SANITY <span>LIFTERS</span></div>
+  </div>
+  <div class="sidebar-overlay" id="sidebarOverlay" hidden></div>
+
+  <div class="app" id="app">
     <aside class="sidebar" id="sidebar">
       <header class="brand">
         <div class="brand-mark" aria-hidden="true">
@@ -65,19 +73,57 @@
     </main>
   </div>
 
-  <div class="modal" id="modal" hidden>
+  <!-- Editor modal -->
+  <div class="modal" id="editorModal" hidden>
     <div class="modal-backdrop" data-close></div>
-    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card modal-card--wide" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
       <header class="modal-head">
-        <h2 id="modalTitle">New idea</h2>
+        <h2 id="editorTitle">New idea</h2>
         <button class="modal-close" data-close type="button" aria-label="Close">×</button>
       </header>
-      <p class="modal-hint">Create a file named <code>ideas/###-your-slug.md</code> with this shape:</p>
-      <pre class="modal-template" id="modalTemplate"></pre>
+      <div class="editor">
+        <input id="edTitle" class="editor-title" type="text" placeholder="Title" autocomplete="off">
+        <input id="edSummary" class="editor-summary" type="text" placeholder="One-line summary" autocomplete="off">
+        <div class="editor-row">
+          <input id="edTags" type="text" placeholder="tags, comma-separated" autocomplete="off">
+          <select id="edStatus">
+            <option value="idea">idea</option>
+            <option value="wip">wip</option>
+            <option value="live">live</option>
+          </select>
+        </div>
+        <div class="editor-tabs">
+          <button class="tab is-active" id="edWriteTab" type="button">Write</button>
+          <button class="tab" id="edPreviewTab" type="button">Preview</button>
+        </div>
+        <textarea id="edBody" spellcheck="false" placeholder="Write in markdown…"></textarea>
+        <div class="editor-preview" id="edPreview" hidden></div>
+      </div>
       <footer class="modal-actions">
-        <button class="btn-ghost" data-close type="button">Close</button>
-        <button class="btn-primary" id="btnCopy" type="button">Copy template</button>
+        <button class="btn-danger" id="edDelete" type="button" hidden>Delete</button>
+        <span class="spacer"></span>
+        <button class="btn-ghost" data-close type="button">Cancel</button>
+        <button class="btn-primary" id="edSave" type="button">Save</button>
       </footer>
+    </div>
+  </div>
+
+  <!-- Passcode modal -->
+  <div class="modal" id="passcodeModal" hidden>
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card modal-card--sm" role="dialog" aria-modal="true" aria-labelledby="passTitle">
+      <header class="modal-head">
+        <h2 id="passTitle">Unlock editing</h2>
+        <button class="modal-close" data-close type="button" aria-label="Close">×</button>
+      </header>
+      <p class="modal-hint">Enter the passcode from the Vercel <code>ADMIN_PASSCODE</code> env var.</p>
+      <form id="passForm" autocomplete="off">
+        <input id="passInput" type="password" placeholder="Passcode" autocomplete="current-password">
+        <footer class="modal-actions">
+          <button type="button" class="btn-ghost" data-close>Cancel</button>
+          <button type="submit" class="btn-primary">Unlock</button>
+        </footer>
+      </form>
     </div>
   </div>
 

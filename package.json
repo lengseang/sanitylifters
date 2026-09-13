@@ -1,8 +1,8 @@
 {
   "name": "sanitylifters",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
-  "description": "Sanity Lifters — an idea board that turns markdown drafts into a browsable web UI.",
+  "description": "Sanity Lifters — a markdown-driven idea board with a built-in CMS (Upstash Redis).",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js"

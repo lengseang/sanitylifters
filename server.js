@@ -1,12 +1,13 @@
 'use strict';
 
-// Local dev server: serves the static site and mirrors the /api/ideas endpoint.
+// Local dev server: serves the static site and delegates /api/ideas to the
+// shared handler (local drafts persist to .data/drafts.json).
 // Run: node server.js  ->  http://localhost:3000
 
 const http = require('http');
 const fs = require('fs');
 const path = require('path');
-const { listIdeas } = require('./lib/ideas-core.js');
+const { handleRequest } = require('./lib/http-api.js');
 
 const PORT = process.env.PORT || 3000;
 const ROOT = __dirname;
@@ -23,23 +24,19 @@ const MIME = {
   '.woff2': 'font/woff2',
 };
 
-function sendJson(res, status, payload) {
-  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
-  res.end(JSON.stringify(payload));
-}
-
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
 
   if (pathname === '/api/ideas') {
     try {
-      return sendJson(res, 200, { ideas: listIdeas() });
+      return await handleRequest(req, res);
     } catch (err) {
-      return sendJson(res, 500, { error: err.message });
+      res.statusCode = 500;
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      return res.end(JSON.stringify({ error: err.message }));
     }
   }
 
-  // Resolve the static file, defaulting to index.html and blocking traversal.
   let filePath = path.normalize(path.join(ROOT, pathname === '/' ? 'index.html' : pathname));
   if (!filePath.startsWith(ROOT)) {
     res.writeHead(403);

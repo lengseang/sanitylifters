@@ -17,27 +17,37 @@
 
 **Lift the heavy ideas first. Everything else is accessory work.**
 
-An idea board that turns plain markdown drafts into a browsable web UI. Drop a `.md`
-file into `ideas/`, refresh, and it appears — no build step, no database, no framework.
+A personal idea board with a built-in CMS. Ideas live as markdown files you can
+commit to git *and* as drafts you write straight from the browser — on your phone
+or your laptop. No build step, no framework, zero runtime dependencies.
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/lengseang/sanitylifters)
 
-## What it is
-
-A zero-dependency static site with a tiny serverless function. Ideas live as markdown
-files you can edit anywhere; the app discovers them at request time and renders them
-with search, tag filtering, and keyboard navigation.
-
 ## Features
 
-- **Markdown-first** — every idea is a single `.md` file with optional frontmatter.
-- **Auto-discovery** — new files show up on refresh, no manifest to maintain.
+- **CMS in the browser** — create, edit, and delete ideas from the UI, with a live markdown preview.
+- **Markdown-first** — seed content is plain `.md` files; drafts persist to Upstash Redis.
+- **Cross-device** — drafts sync anywhere the site is reachable (phone included).
 - **Search + tag filters** — filter live as you type.
 - **Status tracking** — `idea` / `wip` / `live` per draft.
-- **Keyboard nav** — `↑` / `↓` to move between ideas, `Esc` to close dialogs.
+- **Keyboard nav** — `↑` / `↓` to move, `n` for a new idea, `Esc` to close.
+- **Responsive** — a drawer sidebar and stacked layout on phones.
 - **Animated hero** — a lifting barbell and floating glyphs greet you on load.
-- **Component-based** — object-oriented UI (`Component`, `IdeaStore`, `Sidebar`,
-  `IdeaView`, `Hero`) with a zero-dependency markdown renderer.
+- **Component-based** — object-oriented UI (`Component`, `IdeaStore`, `Sidebar`, `IdeaView`, `Hero`, `Editor`) with a zero-dependency markdown renderer.
+
+## One-time setup (CMS)
+
+The site reads and writes drafts through Upstash Redis. Reads are public; writes
+require a passcode. Set this up once:
+
+1. In Vercel, open the project → **Storage** → **Create** → **Upstash Redis** (the
+   Redis integration). Link it to the project — it injects `UPSTASH_REDIS_REST_URL`
+   and `UPSTASH_REDIS_REST_TOKEN` automatically.
+2. In **Settings → Environment Variables**, add `ADMIN_PASSCODE` (any secret string).
+3. Redeploy. In the app, click **New idea**, enter your passcode when prompted, and go.
+
+Without a Redis integration, the app still works read-only (it shows the committed
+`.md` files), and locally drafts persist to a `.data/` file.
 
 ## Quick start
 
@@ -46,6 +56,7 @@ Local:
 ```bash
 npm start        # or: node server.js
 # open http://localhost:3000
+# local drafts persist to .data/drafts.json
 ```
 
 Vercel:
@@ -56,12 +67,14 @@ vercel dev       # local, mirrors the /api/ideas function
 vercel deploy    # production
 ```
 
-Or use the **Deploy with Vercel** button above — the `api/ideas.js` function and
-`vercel.json` are already wired up.
+Or use the **Deploy with Vercel** button above, then do the one-time CMS setup.
 
 ## Adding an idea
 
-Create a file `ideas/###-your-slug.md`:
+Two ways:
+
+1. **In the browser** — hit **New idea**, write, save. (Requires the passcode.)
+2. **As a file** — commit `ideas/###-your-slug.md`:
 
 ```markdown
 ---
@@ -79,18 +92,21 @@ and blockquotes all render.
 ```
 
 `title` and `summary` fall back to the first heading and body if omitted. `tags`
-become the filter chips in the sidebar; `status` drives the badge and hero counters.
+become the filter chips; `status` drives the badge and hero counters. A draft with
+the same slug shadows its file version, so you can edit any idea.
 
 ## Project structure
 
 ```
 sanitylifters/
-  api/ideas.js          Vercel serverless function → /api/ideas
-  lib/ideas-core.js     Shared logic: glob + parse ideas/*.md
-  ideas/                Your drafts live here (one .md per idea)
-  index.html            Layout (sidebar + reading pane + hero)
-  style.css             Theme + animations
-  app.js                OO component framework + markdown renderer
+  api/ideas.js          Vercel function → GET/POST/DELETE /api/ideas
+  lib/ideas-core.js     Parse ideas/*.md
+  lib/store.js          Persistence: Upstash Redis (or local .data/ fallback)
+  lib/http-api.js       Auth + routing shared by server.js and the function
+  ideas/                Seed drafts (one .md per idea)
+  index.html            Layout (sidebar + reading pane + hero + editor)
+  style.css             Theme + animations + responsive
+  app.js                OO component framework + markdown renderer + editor
   server.js             Local dev server
   vercel.json           Bundles ideas/** into the function
 ```
