@@ -17,17 +17,50 @@ their schedule, and scores them for completing it.
 
 Motivation decays between programs. Without a daily reason to show up, users drift.
 
+## Target user
+
+- **The lapsed lifter** who needs a small daily nudge back in.
+- **The competitive type** who responds to scores and leaderboards.
+- **The time-crunched** user who can only commit to one short task a day.
+
 ## Why now
 
 Challenge + score loops are cheap to build and are a proven retention lever.
 
-## Shape
+## Core experience
 
-- A **Challenge** feature generates a daily task by level.
-- The algorithm respects your work schedule and available days.
-- Tasks are suggestions that can be customized, each earning a score on completion.
+1. A **Challenge** feature generates a daily task by level.
+2. The algorithm respects your work schedule and available days.
+3. Tasks are customizable suggestions, each earning a score on completion.
 
-## Notes
+## User stories
 
-- **Metric:** D1 / D7 / D30 challenge completion.
-- **Risk:** challenges become repetitive noise if they're not varied by level and goal.
+- As a lapsed lifter, I want a single, small challenge each day, so getting back
+  in feels easy rather than overwhelming.
+- As a competitive user, I want to earn and see a score, so I have a reason to
+  show up daily.
+- As a busy worker, I want the challenge to fit my free days, so I'm not punished
+  for having a job.
+
+## MVP scope
+
+**In:** one daily task per user, level scaling, score earning, a streak of
+completed challenges.
+
+**Out:** leaderboards, teams, rewards/cash, custom challenge editor.
+
+## Success metrics
+
+- D1 / D7 / D30 challenge completion.
+- Daily active users vs. non-challenge baseline.
+- Score re-engagement (users who return to protect a streak).
+
+## Risks
+
+- **Repetitive noise** — challenges must vary by level, goal, and muscle group.
+- **Shame mechanics** — keep misses recoverable, never punitive.
+
+## Open questions
+
+- What makes a challenge feel "fresh" at day 60?
+- Should challenges sync with the user's actual program or stay independent?

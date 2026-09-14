@@ -19,20 +19,49 @@ Coaches sell $20 PDFs that get opened twice and forgotten. Athletes buy them,
 follow them for a week, and stall because there is no feedback loop and no
 accountability.
 
+## Target user
+
+- **The digital coach** who wants recurring income without 1:1 time.
+- **The self-guided athlete** who wants a real program, not a PDF.
+- **The intermediate lifter** who has outgrown free plans but can't afford a coach.
+
 ## Why now
 
 Creator-marketplace mechanics are proven, and the "PDF → interactive program"
 gap is still wide open in fitness specifically.
 
-## Shape
+## Core experience
 
-- A coach publishes a program with progression rules and video demos.
-- The app renders it as a live plan with auto-adjusted weights.
-- Athletes log sets; the coach sees a feed of check-ins.
-- Revenue split, with the app taking a platform cut.
+1. A coach publishes a program with progression rules and video demos.
+2. The app renders it as a live plan with auto-adjusted weights.
+3. Athletes log sets; the coach sees a feed of check-ins.
+4. Revenue splits with the platform taking a cut.
 
-## Notes
+## User stories
 
-- Seed the supply side with **3 great coaches** before chasing athletes.
-- **Metric:** program completion rate — the PDF industry averages near zero.
-- **Risk:** two-sided market cold start; the wedge is coach tooling first.
+- As a coach, I want to sell an interactive program, so I earn without adding 1:1 calls.
+- As an athlete, I want the program to adjust my weights, so I don't have to do the math.
+- As a platform, I want a clean revenue share, so coaching is a sustainable line.
+
+## MVP scope
+
+**In:** program publishing, in-app rendering with progression, check-in feed, a
+simple revenue split.
+
+**Out:** live video coaching, subscriptions, marketplace search at scale.
+
+## Success metrics
+
+- Program completion rate (the PDF industry averages near zero).
+- Coach retention and average revenue per coach.
+- Athlete repurchase / program-to-program conversion.
+
+## Risks
+
+- **Two-sided cold start** — seed the supply side with 3 great coaches first.
+- **Quality control** — a bad program hurts the brand more than the coach.
+
+## Open questions
+
+- Revenue share split — flat %, subscription, or per-sale?
+- Do coaches curate athletes, or is it open?
