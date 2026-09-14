@@ -54,9 +54,10 @@ Without a Redis integration, the app still works read-only (it shows the committ
 Local:
 
 ```bash
+cd demo
 npm start        # or: node server.js
 # open http://localhost:3000
-# local drafts persist to .data/drafts.json
+# local drafts persist to demo/.data/drafts.json
 ```
 
 Vercel:
@@ -69,10 +70,13 @@ vercel deploy    # production
 
 Or use the **Deploy with Vercel** button above, then do the one-time CMS setup.
 
+> **Important:** the app lives in `demo/`, so set the Vercel **Root Directory to
+> `demo`** (project → Settings → General → Root Directory) before deploying.
+
 ## Structure
 
-The board is organized into six pillars (see `ideas/000-vision.md`), each with a
-build priority:
+The board is organized into six pillars (see `demo/doc/overview/000-vision.md`),
+each with a build priority:
 
 - **Coach** (p0) — AI form coaching + planning.
 - **Train** (p0–p1) — progress tracking + recovery.
@@ -89,7 +93,7 @@ ideas by pillar and badges them `p0`–`p2`.
 Two ways:
 
 1. **In the browser** — hit **New idea**, write, save. (Requires the passcode.)
-2. **As a file** — commit `ideas/###-your-slug.md`:
+2. **As a file** — commit `demo/doc/<category>/###-your-slug.md`:
 
 ```markdown
 ---
@@ -116,16 +120,24 @@ the same slug shadows its file version, so you can edit any idea.
 
 ```
 sanitylifters/
-  api/ideas.js          Vercel function → GET/POST/DELETE /api/ideas
-  lib/ideas-core.js     Parse ideas/*.md
-  lib/store.js          Persistence: Upstash Redis (or local .data/ fallback)
-  lib/http-api.js       Auth + routing shared by server.js and the function
-  ideas/                Seed drafts (one .md per idea)
-  index.html            Layout (sidebar + reading pane + hero + editor)
-  style.css             Theme + animations + responsive
-  app.js                OO component framework + markdown renderer + editor
-  server.js             Local dev server
-  vercel.json           Bundles ideas/** into the function
+  demo/                     The web app (set as the Vercel Root Directory)
+    api/ideas.js            Vercel function → GET/POST/DELETE /api/ideas
+    lib/ideas-core.js       Parse doc/*.md recursively
+    lib/store.js            Persistence: Upstash Redis (or local .data/ fallback)
+    lib/http-api.js         Auth + routing shared by server.js and the function
+    doc/                    Ideas, grouped by pillar
+      overview/             000-vision.md
+      coach/                001-ai-form-coach.md · 002-ai-suggestion-planning.md
+      train/                003-schedule-progress-tracking.md · 004-recovery-score.md
+      engage/               005-daily-workout-challenge.md · 006-streak-accountability.md
+      connect/              007-chatting-topics.md
+      content/              009-lifting-guides.md · 010-trends-viral-workouts.md
+      monetize/             008-coach-marketplace.md
+    index.html              Layout (sidebar + reading pane + hero + editor)
+    style.css               Theme + animations + responsive
+    app.js                  OO component framework + markdown renderer + editor
+    server.js               Local dev server
+    vercel.json             Bundles doc/** into the function
 ```
 
 ## License

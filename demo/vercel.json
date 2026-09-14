@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/ideas.js": {
-      "includeFiles": "ideas/**"
+      "includeFiles": "doc/**"
     }
   }
 }

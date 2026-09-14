@@ -6,11 +6,11 @@
 const fs = require('fs');
 const path = require('path');
 
-/** Locate the ideas/ directory across runtimes (local cwd vs Vercel bundle). */
+/** Locate the doc/ directory across runtimes (local cwd vs Vercel bundle). */
 function resolveIdeasDir() {
   const candidates = [
-    path.join(process.cwd(), 'ideas'),
-    path.join(__dirname, '..', 'ideas'),
+    path.join(process.cwd(), 'doc'),
+    path.join(__dirname, '..', 'doc'),
   ];
   for (const candidate of candidates) {
     try {
@@ -19,7 +19,7 @@ function resolveIdeasDir() {
       /* keep looking */
     }
   }
-  throw new Error('ideas/ directory not found');
+  throw new Error('doc/ directory not found');
 }
 
 /** Parse a tiny YAML-ish frontmatter block and split it from the body. */
@@ -54,28 +54,38 @@ function firstHeading(body) {
   return match ? match[1].trim() : null;
 }
 
-/** Read every .md in ideas/ and return normalized idea objects, sorted by filename. */
+/** Recursively collect every .md under a directory. */
+function collectMarkdown(dir) {
+  const out = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) out.push(...collectMarkdown(full));
+    else if (entry.name.endsWith('.md')) out.push(full);
+  }
+  return out;
+}
+
+/** Read every .md in doc/ (grouped by category folder) and normalize. */
 function listIdeas() {
   const dir = resolveIdeasDir();
-  const files = fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith('.md'))
-    .sort();
+  const files = collectMarkdown(dir).sort();
 
   return files.map((file) => {
-    const raw = fs.readFileSync(path.join(dir, file), 'utf8');
+    const raw = fs.readFileSync(file, 'utf8');
     const { meta, body } = parseFrontmatter(raw);
-    const slug = file.replace(/\.md$/, '');
+    const rel = path.relative(dir, file).replace(/\\/g, '/');
+    const slug = path.basename(file).replace(/\.md$/, '');
+    const folder = rel.includes('/') ? rel.split('/')[0] : null;
     const tags = Array.isArray(meta.tags) ? meta.tags : meta.tags ? [meta.tags] : [];
 
     return {
       slug,
-      file,
+      file: rel,
       title: meta.title || firstHeading(body) || slug,
       summary: meta.summary || null,
       tags,
       status: meta.status || 'idea',
-      category: meta.category || null,
+      category: meta.category || folder || null,
       priority: meta.priority || null,
       date: meta.date || null,
       body: body.trim(),
