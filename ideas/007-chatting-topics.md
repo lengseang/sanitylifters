@@ -3,6 +3,8 @@ title: "Chatting & Topics"
 summary: "Find a gym-bro nearby or a 'blind gym-bro' match, plus topic rooms."
 tags: [social, community, matching]
 status: idea
+category: connect
+priority: p2
 date: 2026-09-14
 ---
 

@@ -3,6 +3,8 @@ title: "Daily Workout Challenge"
 summary: "Algorithm-generated daily challenges scaled to your level, with score earning."
 tags: [gamification, challenges, engagement]
 status: idea
+category: engage
+priority: p1
 date: 2026-09-14
 ---
 

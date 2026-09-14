@@ -3,6 +3,8 @@ title: "Streak & Accountability"
 summary: "Turn consistency into a social contract — train, or lose the streak."
 tags: [social, habits, streaks]
 status: idea
+category: engage
+priority: p1
 date: 2026-09-13
 ---
 

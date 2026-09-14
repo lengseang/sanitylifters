@@ -3,6 +3,8 @@ title: "Trends & Viral Workouts"
 summary: "Surface trending fitness content and turn it into curated tips and plans."
 tags: [trends, content, discovery]
 status: idea
+category: content
+priority: p2
 date: 2026-09-14
 ---
 

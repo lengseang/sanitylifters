@@ -3,6 +3,8 @@ title: "AI Suggestion & Planning"
 summary: "AI builds a personalized routine and goal plan from a few quick inputs."
 tags: [ai, planning, personalization]
 status: idea
+category: coach
+priority: p1
 date: 2026-09-14
 ---
 

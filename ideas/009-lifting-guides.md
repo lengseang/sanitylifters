@@ -3,6 +3,8 @@ title: "Lifting Guides & Tutorials"
 summary: "Image and video tutorials for every lift."
 tags: [content, education, media]
 status: idea
+category: content
+priority: p1
 date: 2026-09-14
 ---
 

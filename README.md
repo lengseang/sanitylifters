@@ -69,6 +69,21 @@ vercel deploy    # production
 
 Or use the **Deploy with Vercel** button above, then do the one-time CMS setup.
 
+## Structure
+
+The board is organized into six pillars (see `ideas/000-vision.md`), each with a
+build priority:
+
+- **Coach** (p0) — AI form coaching + planning.
+- **Train** (p0–p1) — progress tracking + recovery.
+- **Engage** (p1) — challenges + streaks.
+- **Connect** (p2) — matching + group rooms.
+- **Content** (p1–p2) — guides + trends.
+- **Monetize** (p2) — coach marketplace.
+
+`category` and `priority` live in each file's frontmatter; the sidebar groups
+ideas by pillar and badges them `p0`–`p2`.
+
 ## Adding an idea
 
 Two ways:
@@ -82,6 +97,8 @@ title: "AI Form Coach"
 summary: "One-line pitch."
 tags: [ai, coaching, camera]
 status: wip
+category: coach
+priority: p1
 date: 2026-09-13
 ---
 

@@ -3,6 +3,8 @@ title: "Schedule & Progress Tracking"
 summary: "A progress tracker with a GitHub-style task board for workouts."
 tags: [tracking, ui, habits]
 status: idea
+category: train
+priority: p0
 date: 2026-09-14
 ---
 

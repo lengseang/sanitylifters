@@ -3,6 +3,8 @@ title: "AI Form Coach"
 summary: "A camera-based coach that catches bad reps before they become bad habits."
 tags: [ai, coaching, camera]
 status: wip
+category: coach
+priority: p0
 date: 2026-09-13
 ---
 

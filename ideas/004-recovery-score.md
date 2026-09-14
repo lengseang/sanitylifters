@@ -3,6 +3,8 @@ title: "Recovery & Readiness Score"
 summary: "A daily readiness score that tells you to push, pull back, or rest."
 tags: [recovery, data, sleep]
 status: idea
+category: train
+priority: p1
 date: 2026-09-13
 ---
 

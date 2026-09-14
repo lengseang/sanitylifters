@@ -3,6 +3,8 @@ title: "Coach Program Marketplace"
 summary: "A marketplace where coaches sell programs, not just one-off PDFs."
 tags: [marketplace, coaching, revenue]
 status: idea
+category: monetize
+priority: p2
 date: 2026-09-13
 ---
 
